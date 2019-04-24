@@ -52,6 +52,5 @@ class Forecast(DataPoint):
 
         response = requests.get(self.url, **request_params)
         self.response_headers = response.headers
-        if response.status_code is not 200:
-            raise requests.exceptions.HTTPError('Bad response')
+        response.raise_for_status()
         return super().__init__(json.loads(response.text))
